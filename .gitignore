@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+env_config/.env.*
+!env_config/.env.example
+
+# Logs
+logs/
+*.log
+
+# Uploaded files
+data/uploads/
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Docker
+*.dockerignore
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/

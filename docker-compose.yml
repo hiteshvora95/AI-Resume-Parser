@@ -1,0 +1,55 @@
+version: '3.8'
+
+name: resume_parser
+
+services:
+  mongodb:
+    container_name: rp_mongodb
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - resume_network
+
+  api:
+    container_name: rp_api
+    build: .
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    env_file: .env
+    environment:
+      - SERVICE=api
+      - MONGODB_URL=mongodb://mongodb:27017
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - mongodb
+    networks:
+      - resume_network
+
+  ui:
+    container_name: rp_ui
+    build: .
+    ports:
+      - "8501:8501"
+    env_file: .env
+    environment:
+      - SERVICE=ui
+      - API_BASE_URL=http://api:8000
+      - PYTHONPATH=/app
+    depends_on:
+      - api
+    networks:
+      - resume_network
+
+networks:
+  resume_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
